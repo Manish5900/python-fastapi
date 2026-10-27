@@ -39,6 +39,7 @@ def update_product(id: int, product: Product, db: Session = Depends(get_db)):
 @router.delete("/product/{id}")
 def delete_product(id: int, db: Session = Depends(get_db)):
     db_product = product.delete_product(db, id)
+    
     if db_product:
         return "Product deleted successfully"
     return {"error": "Product not found"}
