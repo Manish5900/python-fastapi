@@ -4,12 +4,13 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.core.database import engine, session
 from app.crud.product import seed_products
 from app.models.product import Base
-from app.routers import products
+from app.routers import products, shops
 
 app = FastAPI()
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],
+    # allow_origins=["http://localhost:3000","http://localhost:5173"],
+    allow_origins=["*"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -18,6 +19,7 @@ app.add_middleware(
 Base.metadata.create_all(bind=engine)
 
 app.include_router(products.router)
+app.include_router(shops.router)
 
 INITIAL_PRODUCTS = [
     {"id": 1, "name": "Product 1", "description": "Description", "price": 10.99, "quantity": 100},
